@@ -35,16 +35,20 @@ public class FileStorageService {
  
     public Resource load(String filename) {
         try {
-            Path file = root.resolve(filename);
+            Path file = root.resolve(filename).normalize();
+            System.out.println("Looking for file at: " + file.toAbsolutePath());
+
             Resource resource = new UrlResource(file.toUri());
- 
-            if (resource.exists() || resource.isReadable()) {
+
+            if (resource.exists() && resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("Could not read file!");
+                throw new RuntimeException("Could not read file: " + filename);
             }
+
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
+            throw new RuntimeException("Malformed file path: " + e.getMessage(), e);
         }
     }
+
 }
