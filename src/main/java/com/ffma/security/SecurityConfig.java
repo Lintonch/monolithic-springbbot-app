@@ -42,7 +42,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 		.authorizeHttpRequests()
-		.requestMatchers(HttpMethod.POST, "/api/auth/**")
+		.requestMatchers(HttpMethod.POST, "/api/auth/**","/api/files/**")
 		.permitAll()
 		.anyRequest()
 		.authenticated()
